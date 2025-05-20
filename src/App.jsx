@@ -78,6 +78,8 @@ const App = () => {
   const [rememberSettings, setRememberSettings] = useState(() => {
     return localStorage.getItem("rememberSettings") === "true";
   });
+  const [cardTitle, setCardTitle] = useState("Retroid Pocket Classic");
+  const [titleColor, setTitleColor] = useState("#ff00ff");
 
   useEffect(() => {
     if (rememberSettings) {
@@ -146,6 +148,21 @@ const App = () => {
             </select>
           </label>
         </div>
+        <div className="flex gap-4 items-center mb-2">
+          <Input
+            type="text"
+            value={cardTitle}
+            onChange={(e) => setCardTitle(e.target.value)}
+            placeholder="Card Title"
+            className="text-sm h-8 px-2 w-64"
+          />
+          <input
+            type="color"
+            value={titleColor}
+            onChange={(e) => setTitleColor(e.target.value)}
+            className="w-8 h-8 border rounded"
+          />
+        </div>
         <div className="flex gap-2">
           <Button onClick={addField}>Agregar campo</Button>
           <Button onClick={captureImage}>Generar Imagen</Button>
@@ -170,6 +187,9 @@ const App = () => {
 
       <div className="w-full flex justify-center">
         <Card id="spec-card" className="w-fit bg-[#0d0d26] p-6 rounded-2xl shadow-2xl border border-[#1f1f3d]">
+          <div className="text-center text-lg font-bold mb-4 drop-shadow-[0_0_5px_blue]" style={{ color: titleColor, textShadow: `0 0 5px ${titleColor}` }}>
+            {cardTitle}
+          </div>
           <CardContent className={`grid gap-6 ${columns===1 ? 'grid-cols-1' : columns===2 ? 'grid-cols-2' : columns===3 ? 'grid-cols-3' : 'grid-cols-4' }`}>
             {fields.map((field) => (
               <div key={field.id}
