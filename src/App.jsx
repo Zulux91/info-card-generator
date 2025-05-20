@@ -73,7 +73,7 @@ const App = () => {
   });
   const [columns, setColumns] = useState(() => {
     const savedCols = localStorage.getItem("columns");
-    return savedCols ? parseInt(savedCols) : 2;
+    return savedCols ? parseInt(savedCols) : 3;
   });
   const [rememberSettings, setRememberSettings] = useState(() => {
     return localStorage.getItem("rememberSettings") === "true";
@@ -216,6 +216,7 @@ const App = () => {
           </svg> React
         </span>
       </footer>
+      <div style={{ height: "20px" }}></div>
     </div>
   );
 };
