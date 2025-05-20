@@ -15,14 +15,14 @@ import { v4 as uuidv4 } from "uuid";
 
 const defaultFields = [
   { id: uuidv4(), label: "CPU", value: "Snapdragon G1 Gen 2", color: "#ff4b4b" },
-  { id: uuidv4(), label: "RAM", value: "4GB / 6GB options", color: "#ff4b4b" },
-  { id: uuidv4(), label: "Storage", value: "64GB / 128GB options", color: "#ff4b4b" },
-  { id: uuidv4(), label: "Display", value: "3.92\" OLED 1240x1080", color: "#ffe600" },
-  { id: uuidv4(), label: "Battery", value: "5000mAh (27W charge)", color: "#ffe600" },
-  { id: uuidv4(), label: "Weight", value: "225g (about 8 ounces)", color: "#ffe600" },
-  { id: uuidv4(), label: "Connectivity", value: "5GHz WiFi, BT 5.1", color: "#4fff4b" },
-  { id: uuidv4(), label: "Operating system", value: "Android 14", color: "#4fff4b" },
-  { id: uuidv4(), label: "Other", value: "Active fan, 6-button layout", color: "#4fff4b" },
+  { id: uuidv4(), label: "RAM", value: "Opciones de 4 GB y 6 GB", color: "#ff4b4b" },
+  { id: uuidv4(), label: "Almacenamiento", value: "Opciones de 64 GB y 128 GB", color: "#ff4b4b" },
+  { id: uuidv4(), label: "Pantalla", value: "3.92\" OLED 1240x1080", color: "#ffe600" },
+  { id: uuidv4(), label: "Bateria", value: "5000 mAh (Carga de 27 W)", color: "#ffe600" },
+  { id: uuidv4(), label: "Peso", value: "225g (casi 8 onzas)", color: "#ffe600" },
+  { id: uuidv4(), label: "Conectividad", value: "WiFi 5 GHz, BT 5.1", color: "#4fff4b" },
+  { id: uuidv4(), label: "Sistema Operativo", value: "Android 14", color: "#4fff4b" },
+  { id: uuidv4(), label: "Otros", value: "Ventilador, 6 botones", color: "#4fff4b" },
 ];
 
 const SortableField = ({ id, field, updateField, removeField }) => {
