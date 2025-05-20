@@ -168,24 +168,26 @@ const App = () => {
         </SortableContext>
       </DndContext>
 
-      <Card id="spec-card" className="mx-auto w-fit bg-[#0d0d26] p-6 rounded-2xl shadow-2xl border border-[#1f1f3d]">
-        <CardContent className={`grid gap-6 ${columns===1 ? 'grid-cols-1' : columns===2 ? 'grid-cols-2' : columns===3 ? 'grid-cols-3' : 'grid-cols-4' }`}>
-          {fields.map((field) => (
-            <div key={field.id}
-              className="space-y-1 p-3 rounded-xl border bg-[#141432] shadow-lg hover:shadow-neon transition-shadow duration-300"
-              style={{ borderColor: field.color }}>
-              <div className="relative text-sm font-bold drop-shadow-[0_0_1px]" style={{ color: field.color, textShadow: `0 0 5px ${field.color}` }}>
-                <span className="absolute -top-10 left-2 px-2 py-1 bg-[#141432] text-xs font-bold tracking-wide" style={{ color: field.color }}>
-                  {field.label}
-                </span>
-                <div className="mt-4 text-white text-sm font-mono drop-shadow-[0_0_5px_blue]" style={{ borderTopColor: field.color }}>
-                  {field.value}
+      <div className="w-full flex justify-center">
+        <Card id="spec-card" className="w-fit bg-[#0d0d26] p-6 rounded-2xl shadow-2xl border border-[#1f1f3d]">
+          <CardContent className={`grid gap-6 ${columns===1 ? 'grid-cols-1' : columns===2 ? 'grid-cols-2' : columns===3 ? 'grid-cols-3' : 'grid-cols-4' }`}>
+            {fields.map((field) => (
+              <div key={field.id}
+                className="space-y-1 p-3 rounded-xl border bg-[#141432] shadow-lg hover:shadow-neon transition-shadow duration-300"
+                style={{ borderColor: field.color }}>
+                <div className="relative text-sm font-bold drop-shadow-[0_0_1px]" style={{ color: field.color, textShadow: `0 0 5px ${field.color}` }}>
+                  <span className="absolute -top-10 left-2 px-2 py-1 bg-[#141432] text-xs font-bold tracking-wide" style={{ color: field.color }}>
+                    {field.label}
+                  </span>
+                  <div className="mt-4 text-white text-sm font-mono drop-shadow-[0_0_5px_blue]" style={{ borderTopColor: field.color }}>
+                    {field.value}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
+            ))}
+          </CardContent>
+        </Card>
+      </div>
 
       <footer className="fixed bottom-0 left-0 w-full text-center text-sm text-white/60 bg-[#0f0c29] py-2 border-t border-white/10">
         Made by <span className="font-semibold">Zulux91</span> with 💗 using <span className="inline-flex items-center gap-1 text-cyan-400">
