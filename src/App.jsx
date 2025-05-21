@@ -14,15 +14,15 @@ import { toPng } from "html-to-image";
 import { v4 as uuidv4 } from "uuid";
 
 const defaultFields = [
-  { id: uuidv4(), label: "CPU", value: "Snapdragon G1 Gen 2", color: "#ff4b4b", shadowColor: "#0080ff" },
+  { id: uuidv4(), label: "CPU", value: "Snapdragon G1 Gen 2", color: "#ff4b4b", shadowColor: "#0080ff", neon: true },
   { id: uuidv4(), label: "RAM", value: "Opciones de 4 GB y 6 GB", color: "#ff4b4b", shadowColor: "#0080ff" },
-  { id: uuidv4(), label: "Almacenamiento", value: "Opciones de 64 GB y 128 GB", color: "#ff4b4b", shadowColor: "#0080ff" },
-  { id: uuidv4(), label: "Pantalla", value: "3.92\" OLED 1240x1080", color: "#ffe600", shadowColor: "#0080ff" },
-  { id: uuidv4(), label: "Bateria", value: "5000 mAh (Carga de 27 W)", color: "#ffe600", shadowColor: "#0080ff" },
-  { id: uuidv4(), label: "Peso", value: "225g (casi 8 onzas)", color: "#ffe600", shadowColor: "#0080ff" },
-  { id: uuidv4(), label: "Conectividad", value: "WiFi 5 GHz, BT 5.1", color: "#4fff4b", shadowColor: "#0080ff" },
-  { id: uuidv4(), label: "Sistema Operativo", value: "Android 14", color: "#4fff4b", shadowColor: "#0080ff" },
-  { id: uuidv4(), label: "Otros", value: "Ventilador, 6 botones", color: "#4fff4b", shadowColor: "#0080ff" },
+  { id: uuidv4(), label: "Almacenamiento", value: "Opciones de 64 GB y 128 GB", color: "#ff4b4b", shadowColor: "#0080ff", neon: true },
+  { id: uuidv4(), label: "Pantalla", value: "3.92\" OLED 1240x1080", color: "#ffe600", shadowColor: "#0080ff", neon: true },
+  { id: uuidv4(), label: "Bateria", value: "5000 mAh (Carga de 27 W)", color: "#ffe600", shadowColor: "#0080ff", neon: true },
+  { id: uuidv4(), label: "Peso", value: "225g (casi 8 onzas)", color: "#ffe600", shadowColor: "#0080ff", neon: true },
+  { id: uuidv4(), label: "Conectividad", value: "WiFi 5 GHz, BT 5.1", color: "#4fff4b", shadowColor: "#0080ff", neon: true },
+  { id: uuidv4(), label: "Sistema Operativo", value: "Android 14", color: "#4fff4b", shadowColor: "#0080ff", neon: true },
+  { id: uuidv4(), label: "Otros", value: "Ventilador, 6 botones", color: "#4fff4b", shadowColor: "#0080ff", neon: true },
 ];
 
 const SortableField = ({ id, field, updateField, removeField }) => {
@@ -63,6 +63,14 @@ const SortableField = ({ id, field, updateField, removeField }) => {
           onChange={(e) => updateField(id, "shadowColor", e.target.value)}
           className="w-8 h-8 border rounded"
         />
+        <label className="flex items-center gap-1 text-xs">
+          <input
+            type="checkbox"
+            checked={field.neon !== false}
+            onChange={(e) => updateField(id, "neon", e.target.checked)}
+          />
+          Neon
+        </label>
         <button
           className="text-red-500 hover:text-red-700 text-base"
           onClick={() => removeField(id)}
@@ -79,6 +87,7 @@ const App = () => {
     return parsed.map(field => ({
       ...field,
       shadowColor: field.shadowColor || "#0080ff",
+      neon: field.neon !== false,
     }));
   });
   const [columns, setColumns] = useState(() => {
@@ -91,13 +100,18 @@ const App = () => {
   const [cardTitle, setCardTitle] = useState("Retroid Pocket Classic");
   const [titleColor, setTitleColor] = useState("#ff00ff");
   const [glowColor, setGlowColor] = useState("#0080ff");
+  const [titleNeon, setTitleNeon] = useState(() => {
+    const saved = localStorage.getItem("titleNeon");
+    return saved !== null ? saved === "true" : true;
+  });
 
   useEffect(() => {
     if (rememberSettings) {
       localStorage.setItem("fields", JSON.stringify(fields));
       localStorage.setItem("columns", columns.toString());
+      localStorage.setItem("titleNeon", titleNeon.toString());
     }
-  }, [fields, columns, rememberSettings]);
+  }, [fields, columns, titleNeon, rememberSettings]);
 
   useEffect(() => {
     localStorage.setItem("rememberSettings", rememberSettings);
@@ -179,6 +193,14 @@ const App = () => {
             onChange={(e) => setGlowColor(e.target.value)}
             className="w-8 h-8 border rounded"
           />
+          <label className="flex items-center gap-1 text-xs">
+            <input
+              type="checkbox"
+              checked={titleNeon !== false}
+              onChange={(e) => setTitleNeon(e.target.checked)}
+            />
+            Neon
+          </label>
         </div>
         <div className="flex gap-2">
           <Button onClick={addField}>Agregar campo</Button>
@@ -204,7 +226,7 @@ const App = () => {
 
       <div className="w-full flex justify-center">
         <Card id="spec-card" className="w-fit bg-[#0d0d26] p-6 rounded-2xl shadow-2xl border border-[#1f1f3d]">
-          <div className="text-center text-lg font-bold mb-4" style={{ filter: `drop-shadow(0 0 5px ${glowColor})`, color: titleColor, textShadow: `0 0 5px ${titleColor}` }}>
+          <div className="text-center text-lg font-bold mb-4" style={{ filter: titleNeon === false ? "none" : `drop-shadow(0 0 5px ${glowColor})`, color: titleColor, textShadow: `0 0 5px ${titleColor}` }}>
             {cardTitle}
           </div>
           <CardContent className={`grid gap-6 ${columns===1 ? 'grid-cols-1' : columns===2 ? 'grid-cols-2' : columns===3 ? 'grid-cols-3' : 'grid-cols-4' }`}>
@@ -216,7 +238,7 @@ const App = () => {
                   <span className="absolute -top-10 left-2 px-2 py-1 bg-[#141432] text-xs font-bold tracking-wide" style={{ color: field.color }}>
                     {field.label}
                   </span>
-                  <div className="mt-4 text-white text-sm font-mono" style={{ filter: `drop-shadow(0 0 5px ${field.shadowColor})`, borderTopColor: field.color, textShadow: `0 0 5px ${field.color || "#0000ff"}` }}>
+                  <div className="mt-4 text-white text-sm font-mono" style={{ filter: field.neon === false ? "none" : `drop-shadow(0 0 5px ${field.shadowColor})`, borderTopColor: field.color, textShadow: field.neon === false ? "none" : `0 0 5px ${field.shadowColor}` }}>
                     {field.value}
                   </div>
                 </div>
